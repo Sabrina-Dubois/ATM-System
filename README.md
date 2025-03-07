@@ -69,7 +69,7 @@ ATM-System/
 
 ---
 
-## Troubleshooting
+## ‼️ Troubleshooting
 If you encounter any issues, make sure that:
 - ✅ Java 8 or higher is installed
 - ✅ You're running the commands from the project root directory
