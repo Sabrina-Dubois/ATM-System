@@ -46,9 +46,29 @@ This project simulates an ATM (Automated Teller Machine). It allows users to:
 
 ## 📂 Project structure 
 - `src/` : Contains the Java source code.
-- `out/` : Output folder for compiled `.class` files.
+
+```  
+ATM-System/
+├── src/                        
+│   ├── co/
+│   │  └── simplon/
+│   │       └── atm_system/ 
+│   │           ├── Main.java 
+│   │           ├── business/Contains ATM business logic
+│   │           │   ├── ATMService.java   
+│   │           │   ├── Card.java
+│   │           │   ├── CustomerAccount.java
+│   │           │   ├── Transactions.java
+│   │           ├── data/
+│   │           │    ├── CSVWriter.java
+│   │           │    ├── CSVReader.java
+│   │           │    ├── BankSystem.java
+│   │           ├── ui/
+│   │               ├── ATMUI.java    
+```
 
 ---
+
 ## Troubleshooting
 If you encounter any issues, make sure that:
 - ✅ Java 8 or higher is installed
