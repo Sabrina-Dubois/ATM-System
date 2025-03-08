@@ -54,7 +54,7 @@ ATM-System/
 │   │  └── simplon/
 │   │       └── atm_system/ 
 │   │           ├── Main.java 
-│   │           ├── business/Contains             # ATM business logic
+│   │           ├── business                      # ATM business logic
 │   │           │   ├── ATMService.java           # ATM and transaction management business logic
 │   │           │   ├── Card.java                 # Manages account identification and PIN validation
 │   │           │   ├── CustomerAccount.java      # Provides account information 
@@ -63,7 +63,7 @@ ATM-System/
 │   │           │    ├── CSVWriter.java           # For write in the CSv files
 │   │           │    ├── CSVReader.java           # For read  the CSv files
 │   │           │    ├── BankSystem.csv           # file CSV to stock account informations
-│   │           │    ├── Transaction.csv          # file CSV to stock transactions
+│   │           │    ├── Transactions.csv         # file CSV to stock transactions
 │   │           ├── ui/
 │   │               └── ATMUI.java                # Handles user interaction via terminal 
 ```
