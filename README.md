@@ -1,4 +1,4 @@
-# 🔹 ATM-System
+# 🏧  ATM-System
 
 This project simulates an ATM (Automated Teller Machine). It allows users to:
 - Validate a PIN code
@@ -8,9 +8,9 @@ This project simulates an ATM (Automated Teller Machine). It allows users to:
 ---
 
 ## 📌 Main features 
-- **PIN code validation** 🔐
-- **Cash Withdrawal** 💸
-- **Balance Inquiry** 💰
+- **🔐 PIN code validation** 
+- **💵Cash Withdrawal** 
+- **📊 Balance Inquiry**
 
 ---
 
