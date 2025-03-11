@@ -7,20 +7,36 @@
 
 package co.simplon.atm_system;
 
+import java.util.Map;
+
 import co.simplon.atm_system.business.ATMService;
+import co.simplon.atm_system.business.AuthentificationService;
+import co.simplon.atm_system.business.CSVService;
+import co.simplon.atm_system.business.CustomerAccountService;
+import co.simplon.atm_system.model.Card;
+import co.simplon.atm_system.model.CustomerAccount;
 import co.simplon.atm_system.ui.ATMUI;
 
 public class Main {
 	public static void main(String[] args) {
-		String accountsFileName = "/Users/sabichou/Dev/Dev-CDA/eclipse-workspaces/ATM_System/src/co/simplon/atm_system/data/BankSystem.csv";
-		String atmFileName = "/Users/sabichou/Dev/Dev-CDA/eclipse-workspaces/ATM_System/src/co/simplon/atm_system/data/ATMFounds.csv";
+		// Crée les services nécessaires
+		CSVService csvService = new CSVService();
 
-		// Créer un service ATM
-		ATMService atmService = new ATMService(accountsFileName, atmFileName);
+		// Lire les cartes et les comptes depuis les CSV
+		Map<String, Card> cards = csvService.readCards();
+		Map<String, CustomerAccount> accounts = csvService.readAccounts();
 
-		// Créer une interface utilisateur
-		ATMUI atmUI = new ATMUI(atmService);
+		// Initialiser les services
+		// Créer le CustomerAccountService avec les comptes et les cartes
+		CustomerAccountService customerAccountService = new CustomerAccountService(accounts, cards, csvService);
+		// Créer l'AuthentificationService avec les cartes
+		AuthentificationService authService = new AuthentificationService(cards);
 
+		// Créer l'ATMService avec les services
+		ATMService atmService = new ATMService(csvService, authService, customerAccountService);
+
+		// Créer et démarrer l'interface utilisateur
+		ATMUI atmUI = new ATMUI(authService, customerAccountService);
 		atmUI.start();
 	}
 }

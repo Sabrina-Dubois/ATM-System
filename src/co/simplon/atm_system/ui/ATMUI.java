@@ -11,14 +11,19 @@ package co.simplon.atm_system.ui;
 
 import java.util.Scanner;
 
-import co.simplon.atm_system.business.ATMService;
+import co.simplon.atm_system.business.AuthentificationService;
+import co.simplon.atm_system.business.CustomerAccountService;
+import co.simplon.atm_system.model.Card;
 
 public class ATMUI {
-	private ATMService atmService;
+	private AuthentificationService authentificationService;
 	private Scanner scanner;
+	private Card currentCard; // Carte actuellement authentifiée
+	private CustomerAccountService customerAccountService;
 
-	public ATMUI(ATMService atmService) {
-		this.atmService = atmService;
+	public ATMUI(AuthentificationService authService, CustomerAccountService customerAccountService) {
+		this.authentificationService = authService;
+		this.customerAccountService = customerAccountService;
 		this.scanner = new Scanner(System.in);
 	}
 
@@ -69,14 +74,14 @@ public class ATMUI {
 
 		int attempts = 0;
 		while (attempts < 3) {
-			String validationMessage = atmService.validatePin(enteredPin);
+			currentCard = authentificationService.authenticate(enteredPin);
 
-			if (validationMessage.contains("Accès autorisé")) {
-				System.out.println("\033[1;32m" + validationMessage + "\033[0m");
+			if (currentCard != null) {
+				System.out.println("\033[1;32mAccès autorisé.\033[0m");
 				showMainMenu();
 				return;
 			} else {
-				System.out.println(validationMessage);
+				System.out.println("\033[31mCode PIN incorrect.\033[0m");
 			}
 
 			attempts++;
@@ -85,6 +90,8 @@ public class ATMUI {
 				enteredPin = scanner.nextLine();
 			}
 		}
+		System.out.println(
+				"\033[31mVotre carte est bloquée après 3 tentatives incorrectes, contactez le support au 0836656565.\033[0m");
 	}
 
 	private void showMainMenu() {
@@ -95,7 +102,7 @@ public class ATMUI {
 		System.out.println("\n\033[36mQue souhaitez-vous faire ?\033[0m");
 		System.out.println("\033[90m1. Retirer de l'argent\033[0m");
 		System.out.println("\033[90m2. Consulter votre solde\033[0m");
-		System.out.println("\033[90m3. Retourner au menu principal\033[0m");
+		System.out.println("\033[90m3. Quitter\033[0m");
 		System.out.println("\033[90m===================================\033[0m");
 
 		int choice = getUserChoice();
@@ -109,12 +116,12 @@ public class ATMUI {
 			showWithdrawalMenu();
 			break;
 		case 2:
-			double balance = atmService.getBalance();
+			double balance = getBalance();
 			System.out.println("\033[1;32mVotre solde est : " + balance + "€\033[0m");
 			showMainMenu();
 			break;
 		case 3:
-			start();
+			System.out.println("\033[32mMerci d'avoir utilisé notre service. À bientôt !\033[0m");
 			break;
 		default:
 			System.out.println("\033[31mChoix invalide. Veuillez réessayer.\033[0m");
@@ -136,8 +143,7 @@ public class ATMUI {
 		System.out.println("\033[90m6. 500€\033[0m");
 		System.out.println("\033[90m7. Entrer un montant personnalisé\033[0m");
 		System.out.println("\033[90m8. Retourner au menu principal\033[0m");
-		System.out.println("\033[90m8. Séléctionner une option\033[0m");
-		System.out.println("\033[90===================================\033[0m");
+		System.out.println("\033[90m===================================\033[0m");
 
 		int choice = getUserChoice();
 		handleWithdrawalChoice(choice);
@@ -178,10 +184,25 @@ public class ATMUI {
 			return;
 		}
 
-		String result = atmService.withdrawMoney(amount);
-
+		String result = withdraw(amount);
 		System.out.println("\033[1;32m" + result + "\033[0m");
-
 		showMainMenu();
+	}
+
+	private String withdraw(double amount) {
+		double balance = customerAccountService.getBalance(currentCard);
+
+		if (balance >= amount) {
+			customerAccountService.updateBalance(currentCard, balance - amount); // Mise à jour du solde
+			return "Retrait de " + amount + "€ effectué avec succès.";
+		} else {
+			return "Fonds insuffisants !";
+		}
+	}
+
+	// Méthode simulant l'obtention du solde (exemple simple)
+	private double getBalance() {
+		// Logique pour obtenir le solde (à implémenter)
+		return customerAccountService.getBalance(currentCard);
 	}
 }
