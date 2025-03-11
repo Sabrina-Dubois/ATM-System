@@ -53,19 +53,34 @@ ATM-System/
 │   ├── co/
 │   │  └── simplon/
 │   │       └── atm_system/ 
-│   │           ├── Main.java 
-│   │           ├── business                      # ATM business logic
-│   │           │   ├── ATMService.java           # ATM and transaction management business logic
-│   │           │   ├── Card.java                 # Manages account identification and PIN validation
-│   │           │   ├── CustomerAccount.java      # Provides account information 
-│   │           │   ├── Transactions.java         # Manages banking operations 
-│   │           ├── data/
-│   │           │    ├── CSVWriter.java           # For write in the CSv files
-│   │           │    ├── CSVReader.java           # For read  the CSv files
-│   │           │    ├── BankSystem.csv           # file CSV to stock account informations
-│   │           │    ├── Transactions.csv         # file CSV to stock transactions
-│   │           ├── ui/
-│   │               └── ATMUI.java                # Handles user interaction via terminal 
+│   │           ├── business                           # Business logic for the ATM
+│   │           │   ├── ATMService.java                # Logic for managing the ATM and transactions
+│   │           │   ├── ATMStatusService.java          # Manages account identification and PIN validation
+│   │           │   ├── AuthentificationService.java   # Provides account-related information
+│   │           │   ├── Transactions.java              # Manages banking operations
+│   │           │   ├── BankService.java               # Manages the logic for the bank
+│   │           │   ├── CSVService.java                # Logic for importing and exporting data to/from CSV
+│   │           │   ├── CustumerAccountService.java    # Handles transactions in greater detail
+│   │           │   ├── TransactionService.java        # Handles transactions in greater detail
+│   │           ├── config
+│   │           │   ├── Configuration.java             # Manages the application's configuration                
+│   │           ├── data/ # Manages data files
+│   │           │    ├── CSVWriter.java                # Writes data to CSV files
+│   │           │    ├── CSVReader.java                # Reads data from CSV files
+│   │           │    ├── Accounts.csv                  # CSV file to store account information
+│   │           │    ├── ATMFunds.csv                  # CSV file to store information related to ATM funds
+│   │           │    ├── Cards.csv                     # CSV file to store card information
+│   │           ├── model                              # Contains the entities for the ATM's domain logic
+│   │           │   ├── Bank.java                      # Entity representing the bank
+│   │           │   ├── Card.java                      # Entity representing a bank card
+│   │           │   ├── CustomerAccount.java           # Entity representing a customer account
+│   │           │   ├── Transaction.java               # Entity representing a transaction 
+│   │           ├── ui/                                # User interface
+│   │           │     └── ATMUI.java                   # Manages user interaction via the terminal
+│   │           └── Main.java                          # Entry point of the application
+├── resources/
+│    └── config.properties                             # Contains configuration properties like file paths
+└── README.md                                          # Project documentation
 ```
 
 ---
